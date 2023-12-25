@@ -27,6 +27,8 @@
                 I received my M.S. in Computer Science and Engineering at the University of Michigan and my B.S. in Computer Science at the University of Notre Dame.  I have  been fortunate to receive the GEM Fellowship ('19) and the NSF Graduate Research Fellowship ('20).
               </p>
 
+              <p id="lastModified" style="font-size: small; text-align: left;"></p>
+
               <p style="text-align:center">
                 <a href="mailto:mkperez@umich.edu">Email</a> &nbsp/&nbsp
                 <a href="data/Perez_CV.pdf">CV</a> &nbsp/&nbsp
@@ -44,7 +46,7 @@
           </tr>
         </tbody></table>
 
-        <p id="lastModified" style="font-size: small; text-align: center;"></p>
+        
 
 
 
@@ -246,7 +248,9 @@
     </tr>
   </table>
   <script>
-    document.getElementById('lastModified').textContent = 'Last Updated: ' + document.lastModified;
+    var lastModified = document.lastModified;     // Get the full lastModified string
+    var datePart = lastModified.split(" ")[0];    // Split by space and take the first part (date)
+    document.getElementById('lastModified').textContent = 'Last Updated: ' + datePart;
   </script>
 </body>
 
