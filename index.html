@@ -54,7 +54,6 @@
         </tbody></table>
 
         <h2>Publications</h2>
-				
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <tr>
             <td style="padding:20px;width:75%;vertical-align:middle">
@@ -271,9 +270,12 @@
     </tr>
   </table>
   <script>
-    var lastModified = document.lastModified;     // Get the full lastModified string
-    var datePart = lastModified.split(" ")[0];    // Split by space and take the first part (date)
-    document.getElementById('lastModified').textContent = 'Webpage Last Updated: ' + datePart;
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var dd = String(today.getDate()).padStart(2, '0');
+    var formattedDate = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('lastModified').textContent = 'Webpage Last Updated: ' + formattedDate;
   </script>
 </body>
 
