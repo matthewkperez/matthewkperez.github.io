@@ -129,3 +129,8 @@ name {
 span.highlight {
   background-color: #ffffd0;
 }
+
+.featured-paper {
+  border-left: 3px solid #1772d0;
+  background-color: #f0f6ff;
+}
