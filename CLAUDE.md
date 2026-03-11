@@ -24,6 +24,15 @@ This is a **static HTML academic portfolio website** for Matthew Perez, deployed
 - The `.one`/`.two`/`.fade` CSS classes handle the hover image-swap effect on paper thumbnails
 - "Last Updated" date at the bottom is set dynamically via inline `<script>` using `document.lastModified`
 
+## Session Summaries
+
+Past session notes are stored in `.claude/session_summaries/`, named by date (e.g. `2026-03-11.md`).
+
+**At the start of each session, load the latest summary:**
+`.claude/session_summaries/latest_session.md`
+
+This file is a symlink to the most recent session and contains what was built, decisions made, and any TODOs flagged for the next session.
+
 ## Common Tasks
 
 **Add a publication:** Copy an existing `<tr>` block in the publications table in `index.html`. Add the paper thumbnail to `images/papers_images/`.
