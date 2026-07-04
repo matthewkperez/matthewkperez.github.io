@@ -111,7 +111,7 @@ html, body {
   gap: 10px;
 }
 
-.option-btn {
+.option-card {
   display: block;
   width: 100%;
   text-align: left;
@@ -119,36 +119,46 @@ html, body {
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: var(--radius);
-  padding: 16px 18px;
+  padding: 0;
   font-size: 16px;
   line-height: 1.4;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
+  perspective: 600px;
+  overflow: hidden;
 }
 
-.option-btn:active {
+.option-card:active {
   transform: scale(0.98);
 }
 
-.option-btn:not(:disabled):hover {
+.option-card:hover {
   border-color: var(--accent);
 }
 
-.option-btn:disabled {
-  cursor: default;
-}
-
-.option-btn.correct {
+.option-card.correct {
   background: var(--green-bg);
   border-color: var(--green);
   color: #d3f5e0;
 }
 
-.option-btn.incorrect {
+.option-card.incorrect {
   background: var(--red-bg);
   border-color: var(--red);
   color: #f7d6d7;
+}
+
+.option-inner {
+  padding: 16px 18px;
+  transition: transform 0.16s ease-in;
+  transform: rotateX(0deg);
+  backface-visibility: hidden;
+}
+
+.option-inner.flip-mid {
+  transform: rotateX(90deg);
+  transition-timing-function: ease-in;
 }
 
 .option-letter {
@@ -158,9 +168,23 @@ html, body {
   color: var(--text-dim);
 }
 
-.option-btn.correct .option-letter,
-.option-btn.incorrect .option-letter {
+.option-card.correct .option-letter,
+.option-card.incorrect .option-letter {
   color: inherit;
+}
+
+.tag {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.option-explanation {
+  font-size: 14px;
 }
 
 .feedback {
@@ -173,41 +197,6 @@ html, body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-.explanations {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.explanation {
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 14px;
-  line-height: 1.45;
-  border: 1px solid var(--border);
-}
-
-.explanation.correct {
-  background: var(--green-bg);
-  border-color: var(--green);
-  color: #d3f5e0;
-}
-
-.explanation.incorrect {
-  background: var(--red-bg);
-  border-color: var(--red);
-  color: #f7d6d7;
-}
-
-.explanation .tag {
-  font-weight: 700;
-  margin-right: 6px;
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  opacity: 0.85;
 }
 
 .next-btn {
@@ -249,5 +238,6 @@ html, body {
 
 @media (max-width: 380px) {
   .question { font-size: 17px; }
-  .option-btn { font-size: 15px; padding: 14px 16px; }
+  .option-card { font-size: 15px; }
+  .option-inner { padding: 14px 16px; }
 }

@@ -3,6 +3,7 @@
 
   var NEW_CARD_PROBABILITY = 0.9; // 90% new cards, 10% review of previously-seen cards
   var LETTERS = ["A", "B", "C"];
+  var FLIP_DURATION_MS = 160; // must match CSS .option-inner transition duration
   var ACTIVE_DECK_KEY = "flashcards:activeDeck";
   // Preferred left-to-right order when multiple decks are registered.
   var DECK_ORDER = ["reinforcement-learning-beginner", "reinforcement-learning-advanced"];
@@ -14,7 +15,6 @@
     question: document.getElementById("question"),
     options: document.getElementById("options"),
     feedback: document.getElementById("feedback"),
-    explanations: document.getElementById("explanations"),
     nextBtn: document.getElementById("nextBtn"),
     resetBtn: document.getElementById("resetBtn")
   };
@@ -26,6 +26,10 @@
   var progress = null;
   var currentIndex = null;
   var answered = false;
+  // Per-card state: which face ("front" = option text, "back" = reasoning) each option is showing.
+  var optionState = [];
+  // Guards against spamming the flip mid-animation for a given option.
+  var flipping = [];
 
   function getDeckIds() {
     var registered = Object.keys(window.FLASHCARD_DECKS || {});
@@ -117,79 +121,107 @@
     els.stats.textContent = text;
   }
 
-  function renderCard(index) {
-    currentIndex = index;
-    answered = false;
-    var card = deck.cards[index];
-
-    els.question.textContent = card.q;
-    els.options.innerHTML = "";
-    els.explanations.innerHTML = "";
-    els.feedback.hidden = true;
-
-    card.options.forEach(function (opt, i) {
-      var btn = document.createElement("button");
-      btn.className = "option-btn";
-      btn.setAttribute("data-index", i);
-      btn.innerHTML = '<span class="option-letter">' + LETTERS[i] + "</span>" + escapeHtml(opt);
-      btn.addEventListener("click", function () { selectOption(i); });
-      els.options.appendChild(btn);
-    });
-
-    renderStats();
-  }
-
   function escapeHtml(str) {
     var div = document.createElement("div");
     div.textContent = str;
     return div.innerHTML;
   }
 
-  function selectOption(chosenIndex) {
-    if (answered) return;
-    answered = true;
+  function optionFrontHtml(card, i) {
+    return '<span class="option-letter">' + LETTERS[i] + "</span>" + escapeHtml(card.options[i]);
+  }
 
-    var card = deck.cards[currentIndex];
-    var isCorrect = chosenIndex === card.correct;
-
-    // Update progress
-    var entry = progress.seen[currentIndex] || { timesSeen: 0, timesCorrect: 0, lastSeen: 0 };
-    entry.timesSeen += 1;
-    if (isCorrect) entry.timesCorrect += 1;
-    entry.lastSeen = Date.now();
-    progress.seen[currentIndex] = entry;
-    progress.sessionAnswered = (progress.sessionAnswered || 0) + 1;
-    if (isCorrect) progress.sessionCorrect = (progress.sessionCorrect || 0) + 1;
-    saveProgress();
-
-    // Style buttons
-    var buttons = els.options.querySelectorAll(".option-btn");
-    buttons.forEach(function (btn) {
-      var i = Number(btn.getAttribute("data-index"));
-      btn.disabled = true;
-      if (i === card.correct) {
-        btn.classList.add("correct");
-      } else {
-        btn.classList.add("incorrect");
-      }
-    });
-
-    // Explanations, correct one first
-    var order = [card.correct].concat(
-      card.options.map(function (_, i) { return i; }).filter(function (i) { return i !== card.correct; })
+  function optionBackHtml(card, i) {
+    var isRight = i === card.correct;
+    return (
+      '<span class="tag">' + (isRight ? "Correct" : "Wrong") + "</span>" +
+      '<span class="option-explanation">' + escapeHtml(card.why[i]) + "</span>"
     );
-    order.forEach(function (i) {
-      var div = document.createElement("div");
-      var isRight = i === card.correct;
-      div.className = "explanation " + (isRight ? "correct" : "incorrect");
-      div.innerHTML =
-        '<span class="tag">' + (isRight ? "Correct — " + LETTERS[i] : "Wrong — " + LETTERS[i]) + "</span>" +
-        escapeHtml(card.why[i]);
-      els.explanations.appendChild(div);
+  }
+
+  function renderCard(index) {
+    currentIndex = index;
+    answered = false;
+    var card = deck.cards[index];
+    optionState = card.options.map(function () { return "front"; });
+    flipping = card.options.map(function () { return false; });
+
+    els.question.textContent = card.q;
+    els.options.innerHTML = "";
+    els.feedback.hidden = true;
+
+    card.options.forEach(function (opt, i) {
+      var btn = document.createElement("button");
+      btn.className = "option-card";
+      btn.setAttribute("data-index", i);
+
+      var inner = document.createElement("div");
+      inner.className = "option-inner";
+      inner.innerHTML = optionFrontHtml(card, i);
+      btn.appendChild(inner);
+
+      btn.addEventListener("click", function () { handleOptionClick(i); });
+      els.options.appendChild(btn);
     });
 
-    els.feedback.hidden = false;
     renderStats();
+  }
+
+  function getButton(i) {
+    return els.options.querySelector('.option-card[data-index="' + i + '"]');
+  }
+
+  function flipOption(i, targetState) {
+    if (flipping[i]) return;
+    if (targetState && optionState[i] === targetState) return;
+    var btn = getButton(i);
+    var inner = btn.querySelector(".option-inner");
+    var card = deck.cards[currentIndex];
+    var nextState = targetState || (optionState[i] === "front" ? "back" : "front");
+
+    flipping[i] = true;
+    inner.classList.add("flip-mid");
+    setTimeout(function () {
+      optionState[i] = nextState;
+      inner.innerHTML = nextState === "back" ? optionBackHtml(card, i) : optionFrontHtml(card, i);
+      inner.classList.remove("flip-mid");
+      flipping[i] = false;
+    }, FLIP_DURATION_MS);
+  }
+
+  function handleOptionClick(i) {
+    var card = deck.cards[currentIndex];
+
+    if (!answered) {
+      answered = true;
+      var isCorrect = i === card.correct;
+
+      // Update progress
+      var entry = progress.seen[currentIndex] || { timesSeen: 0, timesCorrect: 0, lastSeen: 0 };
+      entry.timesSeen += 1;
+      if (isCorrect) entry.timesCorrect += 1;
+      entry.lastSeen = Date.now();
+      progress.seen[currentIndex] = entry;
+      progress.sessionAnswered = (progress.sessionAnswered || 0) + 1;
+      if (isCorrect) progress.sessionCorrect = (progress.sessionCorrect || 0) + 1;
+      saveProgress();
+
+      // Color every option card according to correctness (persists across flips).
+      card.options.forEach(function (_, idx) {
+        var btn = getButton(idx);
+        btn.classList.add(idx === card.correct ? "correct" : "incorrect");
+      });
+
+      // The tapped card immediately turns over to reveal its own reasoning.
+      flipOption(i, "back");
+
+      els.feedback.hidden = false;
+      renderStats();
+    } else {
+      // Already answered: tapping any card just toggles it between the
+      // option text and its reasoning, independent of the other cards.
+      flipOption(i);
+    }
   }
 
   function nextCard() {
