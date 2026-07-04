@@ -3,20 +3,14 @@
 
   var NEW_CARD_PROBABILITY = 0.9; // 90% new cards, 10% review of previously-seen cards
   var LETTERS = ["A", "B", "C"];
-
-  // Pick the active deck. If more than one deck is ever registered, prefer
-  // "reinforcement-learning" by default but fall back to the first available.
-  var deckId = window.FLASHCARD_DECKS && window.FLASHCARD_DECKS["reinforcement-learning"]
-    ? "reinforcement-learning"
-    : Object.keys(window.FLASHCARD_DECKS || {})[0];
-
-  var deck = window.FLASHCARD_DECKS ? window.FLASHCARD_DECKS[deckId] : null;
-
-  var storageKey = "flashcards:" + deckId + ":progress:v1";
+  var ACTIVE_DECK_KEY = "flashcards:activeDeck";
+  // Preferred left-to-right order when multiple decks are registered.
+  var DECK_ORDER = ["reinforcement-learning-beginner", "reinforcement-learning-advanced"];
 
   var els = {
     deckTitle: document.getElementById("deckTitle"),
     stats: document.getElementById("stats"),
+    deckSwitcher: document.getElementById("deckSwitcher"),
     question: document.getElementById("question"),
     options: document.getElementById("options"),
     feedback: document.getElementById("feedback"),
@@ -25,13 +19,31 @@
     resetBtn: document.getElementById("resetBtn")
   };
 
-  var progress = loadProgress();
+  var deckIds = getDeckIds();
+  var deckId = null;
+  var deck = null;
+  var storageKey = null;
+  var progress = null;
   var currentIndex = null;
   var answered = false;
 
-  function loadProgress() {
+  function getDeckIds() {
+    var registered = Object.keys(window.FLASHCARD_DECKS || {});
+    var ordered = DECK_ORDER.filter(function (id) { return registered.indexOf(id) !== -1; });
+    var rest = registered.filter(function (id) { return ordered.indexOf(id) === -1; });
+    return ordered.concat(rest);
+  }
+
+  function getPreferredDeckId() {
+    var saved = null;
+    try { saved = localStorage.getItem(ACTIVE_DECK_KEY); } catch (e) {}
+    if (saved && deckIds.indexOf(saved) !== -1) return saved;
+    return deckIds[0];
+  }
+
+  function loadProgress(key) {
     try {
-      var raw = localStorage.getItem(storageKey);
+      var raw = localStorage.getItem(key);
       if (raw) return JSON.parse(raw);
     } catch (e) {}
     return { seen: {}, sessionCorrect: 0, sessionAnswered: 0 };
@@ -76,6 +88,22 @@
     var filtered = pool.filter(function (i) { return i !== currentIndex; });
     if (filtered.length === 0) filtered = pool;
     return filtered[Math.floor(Math.random() * filtered.length)];
+  }
+
+  function renderDeckSwitcher() {
+    if (deckIds.length < 2) {
+      els.deckSwitcher.hidden = true;
+      return;
+    }
+    els.deckSwitcher.innerHTML = "";
+    deckIds.forEach(function (id) {
+      var d = window.FLASHCARD_DECKS[id];
+      var btn = document.createElement("button");
+      btn.className = "deck-pill" + (id === deckId ? " active" : "");
+      btn.textContent = d.shortLabel || d.title;
+      btn.addEventListener("click", function () { switchDeck(id); });
+      els.deckSwitcher.appendChild(btn);
+    });
   }
 
   function renderStats() {
@@ -169,18 +197,37 @@
   }
 
   function resetProgress() {
-    if (!window.confirm("Reset all flashcard progress for this deck?")) return;
+    if (!window.confirm("Reset progress for the " + (deck.shortLabel || deck.title) + " deck?")) return;
     progress = { seen: {}, sessionCorrect: 0, sessionAnswered: 0 };
     saveProgress();
     nextCard();
   }
 
+  function switchDeck(id) {
+    if (id === deckId) return;
+    loadDeck(id);
+    try { localStorage.setItem(ACTIVE_DECK_KEY, id); } catch (e) {}
+    renderDeckSwitcher();
+    nextCard();
+  }
+
+  function loadDeck(id) {
+    deckId = id;
+    deck = window.FLASHCARD_DECKS[id];
+    storageKey = "flashcards:" + deckId + ":progress:v1";
+    progress = loadProgress(storageKey);
+    currentIndex = null;
+    els.deckTitle.textContent = deck.title;
+  }
+
   function init() {
-    if (!deck) {
+    if (!deckIds.length) {
       els.question.textContent = "No flashcard deck found.";
+      els.deckSwitcher.hidden = true;
       return;
     }
-    els.deckTitle.textContent = deck.title;
+    loadDeck(getPreferredDeckId());
+    renderDeckSwitcher();
     els.nextBtn.addEventListener("click", nextCard);
     els.resetBtn.addEventListener("click", resetProgress);
     nextCard();

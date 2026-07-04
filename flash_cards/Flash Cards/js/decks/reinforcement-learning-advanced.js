@@ -1,8 +1,9 @@
 // Reinforcement Learning flashcard deck
 // Each card: q (question), options (3 choices), correct (index of right answer), why (explanation per option, same order as options)
 window.FLASHCARD_DECKS = window.FLASHCARD_DECKS || {};
-window.FLASHCARD_DECKS["reinforcement-learning"] = {
-  title: "Reinforcement Learning",
+window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
+  title: "Reinforcement Learning — Advanced",
+  shortLabel: "Advanced",
   cards: [
     {
       q: "What does the 'Markov' in Markov Decision Process actually mean?",

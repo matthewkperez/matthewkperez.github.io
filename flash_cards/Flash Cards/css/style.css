@@ -62,6 +62,32 @@ html, body {
   gap: 16px;
 }
 
+.deck-switcher {
+  display: flex;
+  gap: 8px;
+  padding: 0 20px 12px;
+}
+
+.deck-pill {
+  flex: 1;
+  padding: 9px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.deck-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0f1115;
+}
+
 .question-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
