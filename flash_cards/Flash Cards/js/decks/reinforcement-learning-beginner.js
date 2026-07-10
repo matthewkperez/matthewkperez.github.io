@@ -8,9 +8,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "In one line, what is reinforcement learning (RL)?",
       options: [
-        "Learning by trial and error: an agent takes actions and improves based on reward feedback from an environment",
+        "Learning by trial and error, guided by reward feedback from an environment",
         "Learning to predict labels by studying a fixed set of labeled examples",
-        "Learning to group similar data points together without any feedback signal"
+        "Learning to group similar data points together, with no feedback signal"
       ],
       correct: 0,
       why: [
@@ -22,9 +22,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "How does RL fundamentally differ from supervised learning?",
       options: [
-        "RL learns from feedback (rewards) about the consequences of actions, rather than from a labeled 'correct answer' for each input",
+        "RL learns from reward feedback, not a labeled answer per input",
         "RL never uses any form of data during training",
-        "RL can only be used when you have millions of labeled examples"
+        "RL only works when you have millions of labeled examples"
       ],
       correct: 0,
       why: [
@@ -36,7 +36,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Which of these problems is the best natural fit for RL?",
       options: [
-        "Teaching a robot arm to complete a multi-step task, where each action changes the situation for the next one",
+        "Teaching a robot arm a multi-step task where each action sets up the next",
         "Predicting tomorrow's house price from square footage and location",
         "Sorting a folder of emails into 'spam' or 'not spam'"
       ],
@@ -50,7 +50,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What's a defining feature that makes a problem 'sequential decision-making,' well suited to RL?",
       options: [
-        "Each action changes the situation, so future decisions depend on what was chosen earlier",
+        "Each action changes the situation, so future choices depend on earlier ones",
         "Every decision is made completely independently of all others",
         "The correct answer is already known in advance for every situation"
       ],
@@ -64,7 +64,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why might RL be a poor choice for a problem, even if it's technically a sequential task?",
       options: [
-        "If real-world mistakes are costly or dangerous, and there's no cheap way to simulate lots of trial-and-error attempts",
+        "When real mistakes are costly or dangerous and can't be safely simulated",
         "Because RL always requires more labeled data than supervised learning",
         "Because RL can only be applied to board games"
       ],
@@ -78,7 +78,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why do many successful RL projects (like game-playing agents) rely heavily on simulators?",
       options: [
-        "Simulators let the agent try huge numbers of trial-and-error attempts quickly and safely, which real-world environments usually can't offer",
+        "They let the agent try many attempts quickly and safely",
         "Simulators are required by law for any RL research",
         "Simulators eliminate the need for a reward function"
       ],
@@ -92,7 +92,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Which is a realistic real-world application of RL?",
       options: [
-        "Optimizing a recommendation system's choices over many user interactions, where feedback (clicks, watch time) shapes future suggestions",
+        "Tuning a recommender as user clicks shape its next suggestions",
         "Reading a scanned document and converting it to text",
         "Identifying whether a photo contains a cat or a dog"
       ],
@@ -107,7 +107,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
       q: "In RL terminology, the 'agent' is:",
       options: [
         "The decision-maker that observes the situation and chooses actions",
-        "The numeric score the learner is trying to maximize",
+        "The numeric score the learner is trying to maximize over time",
         "The external system the decision-maker interacts with"
       ],
       correct: 0,
@@ -120,7 +120,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "In RL terminology, the 'environment' is:",
       options: [
-        "Everything outside the agent that it interacts with and receives feedback from",
+        "The outside world the agent acts on and gets feedback from",
         "The internal strategy the agent uses to pick actions",
         "The total score accumulated at the end of training"
       ],
@@ -135,7 +135,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
       q: "In RL terminology, a 'state' refers to:",
       options: [
         "A snapshot of the current situation the agent finds itself in",
-        "The list of every action the agent has ever taken",
+        "The complete list of every action the agent has ever taken",
         "The final outcome of an entire training run"
       ],
       correct: 0,
@@ -148,7 +148,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "In RL terminology, the 'reward' is:",
       options: [
-        "A feedback signal the environment gives the agent after an action, indicating how good or bad that action was",
+        "Feedback from the environment after an action, signaling how good it was",
         "The agent's internal strategy for choosing actions",
         "A fixed label telling the agent the objectively 'correct' action for every state"
       ],
@@ -162,7 +162,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "A 'policy' in RL refers to:",
       options: [
-        "The agent's strategy for choosing what action to take given its current state",
+        "The agent's strategy for choosing an action given its current state",
         "The rules an environment designer writes to compute rewards",
         "A log of every reward received during training"
       ],
@@ -176,9 +176,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "An 'episode' in RL is best described as:",
       options: [
-        "One complete run of the agent interacting with the environment, from a starting point to some ending point (like a game from start to finish)",
-        "A single action taken by the agent",
-        "The total number of agents trained in an experiment"
+        "One full run of agent–environment interaction, start to finish",
+        "A single action the agent takes at one step",
+        "The total count of agents trained during the experiment"
       ],
       correct: 0,
       why: [
@@ -190,7 +190,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Roughly speaking, a 'value' (as in a state's value) captures:",
       options: [
-        "How good it is to be in a given situation, considering the rewards likely to follow from it",
+        "How good a situation is, given the rewards likely to follow",
         "The exact dollar cost of running the RL experiment",
         "The number of possible actions available in that situation"
       ],
@@ -204,9 +204,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What is the main purpose of a reward function?",
       options: [
-        "To encode, in numeric form, the goal you actually want the agent to accomplish",
-        "To make training run faster on any hardware",
-        "To replace the need for an environment entirely"
+        "To state, as a number, the goal you want the agent to reach",
+        "To make training run faster on any given hardware",
+        "To remove the need for an environment entirely"
       ],
       correct: 0,
       why: [
@@ -218,9 +218,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What's the key tradeoff between sparse and dense rewards?",
       options: [
-        "Sparse rewards (given rarely, e.g. only at success) are simple to specify but harder to learn from; dense rewards (frequent feedback) are easier to learn from but riskier to design well",
-        "Sparse rewards always train faster than dense rewards",
-        "Dense rewards eliminate the need for any exploration"
+        "Sparse rewards are simple to specify but hard to learn from; dense, the reverse",
+        "Sparse rewards always train faster and are simpler to design than dense ones",
+        "Dense rewards remove the agent's need to explore during learning"
       ],
       correct: 0,
       why: [
@@ -232,7 +232,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What is 'reward hacking'?",
       options: [
-        "When an agent finds a way to rack up high reward that technically satisfies the reward function but doesn't achieve what you actually wanted",
+        "Finding a way to score high reward without achieving the real goal",
         "When a human manually overrides the agent's actions during training",
         "When the reward function is deleted partway through training"
       ],
@@ -246,7 +246,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why is 'reward what you actually want, not what's easy to measure' good advice?",
       options: [
-        "If the reward only measures an easy proxy (like distance moved), the agent may optimize the proxy in ways that don't achieve the real goal (like reaching the destination safely)",
+        "Optimizing an easy proxy can miss the real goal it's standing in for",
         "Because easy-to-measure rewards always take longer to compute",
         "Because agents can't process numeric reward signals at all"
       ],
@@ -260,7 +260,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "A cleaning robot is rewarded '+1 point per piece of trash picked up.' What unintended behavior might this encourage?",
       options: [
-        "The robot could learn to pick up the same trash, drop it, and pick it up again repeatedly to rack up points",
+        "It could drop and re-grab the same trash to rack up points",
         "The robot will always clean the room perfectly with no downsides",
         "The robot will refuse to pick up any trash at all"
       ],
@@ -274,7 +274,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What risk comes from writing an extremely detailed reward function that specifies a reward for every tiny sub-behavior?",
       options: [
-        "It becomes easier for the agent to find unintended loopholes among all the small reward terms, producing behavior that technically scores well but looks wrong",
+        "More reward terms mean more loopholes for unintended behavior",
         "The agent will simply ignore the extra reward terms",
         "It always guarantees the agent learns faster with no downsides"
       ],
@@ -288,7 +288,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What's the idea behind 'reward shaping' (giving the agent partial credit along the way)?",
       options: [
-        "Adding smaller intermediate rewards to guide learning faster, instead of only rewarding the final outcome",
+        "Adding small intermediate rewards to guide learning, not just the outcome",
         "Removing the reward function entirely once training starts",
         "Giving the agent full credit for the goal from the very first attempt"
       ],
@@ -302,7 +302,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why might a reward focused only on immediate/short-term outcomes cause problems?",
       options: [
-        "The agent might learn a strategy that looks good right now but leads to worse outcomes later, since nothing pushes it to think ahead",
+        "A choice that looks good now can lead to worse outcomes later",
         "Short-term rewards always produce the same behavior as long-term rewards",
         "Short-term rewards make the environment stop responding to actions"
       ],
@@ -316,7 +316,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why are penalties (negative rewards) sometimes added, alongside positive rewards, in a reward function?",
       options: [
-        "To explicitly discourage specific undesired behaviors, like unsafe or wasteful actions",
+        "To actively discourage unsafe or wasteful behaviors",
         "Penalties are purely decorative and don't affect learning",
         "Because RL agents cannot function unless every reward is negative"
       ],
@@ -330,7 +330,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What is the 'exploration vs. exploitation' tradeoff, in plain terms?",
       options: [
-        "Deciding between trying something new that might be better, versus sticking with an action already known to work well",
+        "Trying something new that might be better vs. sticking with what works",
         "Deciding how many CPU cores to allocate to training",
         "Deciding whether to use RL or supervised learning for a project"
       ],
@@ -344,7 +344,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why can't an agent just exploit (always pick its current best-known action) from the very start of training?",
       options: [
-        "It hasn't tried enough actions yet to know what's actually best, so early 'best guesses' are often wrong or incomplete",
+        "Early best guesses are often wrong before enough actions are tried",
         "Exploitation is technically impossible to implement in code",
         "Exploiting from the start always causes the environment to crash"
       ],
@@ -358,7 +358,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "In plain language, what does the 'discount factor' control in RL?",
       options: [
-        "How much the agent values future rewards compared to immediate ones",
+        "How much the agent weighs future rewards vs. immediate ones",
         "How many actions the agent is allowed to take per second",
         "How much memory the training program is allowed to use"
       ],
@@ -372,8 +372,8 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "An agent that's too 'short-sighted' (heavily discounts future rewards) risks:",
       options: [
-        "Choosing actions that pay off immediately but lead to worse long-term outcomes",
-        "Never taking any action at all",
+        "Choosing actions that pay off now but hurt long-term outcomes",
+        "Never taking any action in the environment",
         "Achieving a perfect score in every environment automatically"
       ],
       correct: 0,
@@ -386,8 +386,8 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why is RL often described as 'sample inefficient' compared to some other machine learning approaches?",
       options: [
-        "It typically needs a large number of trial-and-error attempts (including failures) before it learns good behavior",
-        "It requires zero data of any kind to train",
+        "It needs many trial-and-error attempts before behavior gets good",
+        "It requires no data of any kind in order to train",
         "It can only ever be trained on a single example before stopping"
       ],
       correct: 0,
@@ -400,7 +400,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Why is applying RL directly in physical, real-world safety-critical settings (like self-driving cars) especially challenging?",
       options: [
-        "Real-world trial and error can be dangerous or costly, since mistakes have real consequences, unlike in a simulator",
+        "Real-world mistakes have real consequences, unlike in a simulator",
         "Physical environments can't produce any reward signal",
         "RL algorithms cannot run on any hardware installed in a vehicle"
       ],
@@ -414,7 +414,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What is RLHF (Reinforcement Learning from Human Feedback), at a high level?",
       options: [
-        "A technique where human preferences (like ranking two responses) are used to train a reward signal that then guides an RL process, often used to fine-tune language models",
+        "Using human preferences to train a reward signal that then guides RL",
         "A method that replaces all reward functions with pure random noise",
         "A rule that all RL environments must be designed by humans, never generated by a computer"
       ],
@@ -428,7 +428,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "During early (pre-)training of a large language model, what is the main training objective?",
       options: [
-        "Self-supervised next-token prediction — repeatedly guessing the next word in a huge amount of text",
+        "Self-supervised next-token prediction — guessing the next word in vast amounts of text",
         "Directly maximizing scores from human preference ratings on the model's answers",
         "Trial-and-error exploration of a simulated environment to maximize a reward signal"
       ],
@@ -442,7 +442,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What kind of data is typically used during early (pre-)training of a large language model?",
       options: [
-        "A massive, broad collection of largely unlabeled text and code scraped from diverse sources (web pages, books, repositories)",
+        "A massive, broad collection of unlabeled text and code from many sources",
         "A small, hand-curated set of human preference comparisons between pairs of answers",
         "Only reward signals collected from an agent acting in a simulator"
       ],
@@ -456,7 +456,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What best describes the objective typically emphasized during 'mid-training' (continued pretraining on more curated data)?",
       options: [
-        "Keep using a language-modeling objective, but on higher-quality, more curated, or domain-relevant data to sharpen specific knowledge and skills",
+        "Keep the language-modeling objective, but on higher-quality, curated data",
         "Switch entirely to learning from human preference comparisons",
         "Train a value function to estimate long-term reward for each possible action"
       ],
@@ -470,7 +470,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "How does the data used in mid-training typically differ from the data used in early pretraining?",
       options: [
-        "It's a smaller, more curated, higher-quality or domain-focused slice of data, rather than the broadest possible raw scrape",
+        "A smaller, more curated, higher-quality or domain-focused slice of data",
         "It consists entirely of reward scores with no text at all",
         "It's identical to pretraining data in every way, just repeated more times"
       ],
@@ -484,7 +484,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What is the main objective during post-training (instruction tuning plus RLHF/RLAIF)?",
       options: [
-        "Align the model's behavior with human intent — making it follow instructions helpfully, safely, and in a preferred style or tone",
+        "Align behavior with human intent — helpful, safe, in a preferred style",
         "Expose the model to as much raw, unlabeled internet text as possible for the first time",
         "Purely maximize the size of the model's vocabulary"
       ],
@@ -498,7 +498,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What kind of data is typically used during post-training?",
       options: [
-        "Instruction/response examples plus preference comparisons (e.g. 'which of these two answers is better'), often from humans or another AI model",
+        "Instruction/response examples plus preference comparisons between answers",
         "The exact same broad, unlabeled web-scale text used in pretraining, with nothing added",
         "No data at all — post-training happens purely through random parameter changes"
       ],
@@ -512,7 +512,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "What does 'specification gaming' mean in the context of a deployed RL system?",
       options: [
-        "The agent achieves a high score on its stated objective while failing to accomplish what its designers actually intended",
+        "Scoring high on the stated goal while missing the intended one",
         "The agent refuses to take any actions in the environment",
         "The environment's rules change randomly every episode"
       ],
@@ -526,7 +526,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "Which scenario best illustrates good reward design practice?",
       options: [
-        "Rewarding a delivery robot for 'successfully and safely delivering the package,' rather than just 'distance traveled'",
+        "Rewarding a delivery robot for a safe, successful package delivery",
         "Rewarding a delivery robot only for how fast its wheels spin",
         "Giving the robot no reward signal and hoping it improves anyway"
       ],
@@ -540,7 +540,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-beginner"] = {
     {
       q: "If you're deciding whether a business problem is a good candidate for RL, which question is most relevant?",
       options: [
-        "Does the problem involve a sequence of decisions, where each choice affects future situations and outcomes can be measured over time?",
+        "Does it involve sequential decisions whose outcomes play out over time?",
         "Is there a spreadsheet of historical data with labeled correct answers?",
         "Can the problem be solved by sorting items into two fixed categories?"
       ],
