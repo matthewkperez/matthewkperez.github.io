@@ -25,6 +25,9 @@
   var storageKey = null;
   var progress = null;
   var currentIndex = null;
+  // The current card as presented on screen: a copy of deck.cards[currentIndex]
+  // with its options shuffled so the correct answer isn't always in the top slot.
+  var currentCard = null;
   var answered = false;
   // Per-card state: which face ("front" = option text, "back" = reasoning) each option is showing.
   var optionState = [];
@@ -139,10 +142,37 @@
     );
   }
 
+  // Fisher–Yates shuffle of [0, 1, ..., n-1].
+  function shuffledOrder(n) {
+    var order = [];
+    for (var i = 0; i < n; i++) order.push(i);
+    for (var j = n - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = order[j];
+      order[j] = order[k];
+      order[k] = tmp;
+    }
+    return order;
+  }
+
+  // Return a copy of the card with options (and their aligned reasons) shuffled,
+  // and `correct` remapped to the answer's new position. Everything downstream
+  // works off display order; only progress tracking uses the deck index.
+  function presentCard(card) {
+    var order = shuffledOrder(card.options.length);
+    return {
+      q: card.q,
+      options: order.map(function (o) { return card.options[o]; }),
+      why: order.map(function (o) { return card.why[o]; }),
+      correct: order.indexOf(card.correct)
+    };
+  }
+
   function renderCard(index) {
     currentIndex = index;
     answered = false;
-    var card = deck.cards[index];
+    var card = presentCard(deck.cards[index]);
+    currentCard = card;
     optionState = card.options.map(function () { return "front"; });
     flipping = card.options.map(function () { return false; });
 
@@ -176,7 +206,7 @@
     if (targetState && optionState[i] === targetState) return;
     var btn = getButton(i);
     var inner = btn.querySelector(".option-inner");
-    var card = deck.cards[currentIndex];
+    var card = currentCard;
     var nextState = targetState || (optionState[i] === "front" ? "back" : "front");
 
     flipping[i] = true;
@@ -190,7 +220,7 @@
   }
 
   function handleOptionClick(i) {
-    var card = deck.cards[currentIndex];
+    var card = currentCard;
 
     if (!answered) {
       answered = true;

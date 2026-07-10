@@ -8,7 +8,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "What does the 'Markov' in Markov Decision Process actually mean?",
       options: [
-        "The next state and reward depend only on the current state and action, not on prior history",
+        "The next state and reward depend only on the current state and action",
         "The agent must fully observe the true state at every timestep",
         "All future rewards must be discounted by the same factor"
       ],
@@ -23,8 +23,8 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
       q: "Which tuple correctly defines a standard MDP?",
       options: [
         "(States, Actions, Transition function, Reward function, Discount factor)",
-        "(States, Actions, Policy, Value function, Episodes)",
-        "(States, Observations, Belief state, Actions, Reward)"
+        "(States, Actions, Policy function, Value function, Episode count)",
+        "(States, Observations, Belief state, Actions, Reward function)"
       ],
       correct: 0,
       why: [
@@ -78,7 +78,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "The state-value function V^π(s) represents:",
       options: [
-        "Expected return starting from s and following policy π thereafter",
+        "Expected return from s when following policy π thereafter",
         "The immediate reward available at state s",
         "The probability of reaching the goal state from s"
       ],
@@ -92,9 +92,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "How does the action-value function Q^π(s,a) differ from V^π(s)?",
       options: [
-        "Q^π conditions on taking a specific action a first, then following π afterward",
+        "It conditions on a specific first action a, then follows π",
         "Q^π ignores the discount factor while V^π uses it",
-        "Q^π is only defined for terminal states"
+        "Q^π is only defined for terminal states of an episode"
       ],
       correct: 0,
       why: [
@@ -106,9 +106,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "The Bellman expectation equation expresses V^π(s) in terms of:",
       options: [
-        "The immediate expected reward plus the discounted expected value of successor states",
-        "The sum of all rewards ever received by the agent",
-        "The maximum Q-value over all actions in state s"
+        "Immediate reward plus the discounted value of successor states",
+        "The undiscounted sum of all rewards the agent receives",
+        "The maximum Q-value over all actions available in s"
       ],
       correct: 0,
       why: [
@@ -120,7 +120,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "What distinguishes the Bellman optimality equation from the Bellman expectation equation?",
       options: [
-        "Optimality takes a max over actions instead of averaging under a fixed policy",
+        "Optimality takes a max over actions instead of averaging over a policy",
         "Optimality equations don't involve the discount factor",
         "Optimality equations only apply to episodic (not continuing) tasks"
       ],
@@ -162,7 +162,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "The policy improvement theorem guarantees that:",
       options: [
-        "Acting greedily with respect to V^π produces a new policy that is at least as good as π",
+        "Acting greedily w.r.t. V^π yields a policy at least as good as π",
         "Any random change to a policy will improve its performance",
         "Policy improvement always converges in exactly one step"
       ],
@@ -176,7 +176,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "How does value iteration differ from policy iteration?",
       options: [
-        "Value iteration truncates policy evaluation to a single sweep before improving, merging both steps",
+        "It truncates policy evaluation to a single sweep before improving",
         "Value iteration doesn't require a model of the environment",
         "Value iteration only works for deterministic policies"
       ],
@@ -190,7 +190,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Dynamic programming methods (policy/value iteration) require:",
       options: [
-        "A known model of the environment's transition and reward functions",
+        "A known model of the environment's transitions and rewards",
         "A large replay buffer of past experience",
         "A neural network to approximate the value function"
       ],
@@ -218,7 +218,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "'Bootstrapping' in RL refers to:",
       options: [
-        "Updating a value estimate partly using another (possibly inaccurate) value estimate rather than the full actual return",
+        "Updating a value estimate using another value estimate, not the full return",
         "Initializing all value estimates randomly before training begins",
         "Running multiple independent training runs and averaging their results"
       ],
@@ -246,7 +246,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Compared to Monte Carlo, TD learning generally offers:",
       options: [
-        "Lower variance but higher bias, and the ability to learn online from incomplete episodes",
+        "Lower variance but higher bias, and can learn online from partial episodes",
         "Higher variance but zero bias, and it only works in episodic tasks",
         "Identical bias and variance, but requires a model of the environment"
       ],
@@ -274,7 +274,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Q-learning's update rule Q(s,a) ← Q(s,a) + α[r + γ max_{a'} Q(s',a') − Q(s,a)] makes it:",
       options: [
-        "Off-policy, because it learns about the greedy policy while possibly behaving differently (e.g. ε-greedy)",
+        "Off-policy: it learns the greedy policy while behaving differently",
         "On-policy, because it only ever selects the greedy action during training",
         "Model-based, because it requires the transition probabilities p(s'|s,a)"
       ],
@@ -288,7 +288,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "In RL, 'on-policy' vs 'off-policy' refers to:",
       options: [
-        "Whether the policy being learned/evaluated is the same one used to generate the training data",
+        "Whether the learned policy matches the one that generated the data",
         "Whether the algorithm uses a neural network or a lookup table",
         "Whether the environment has continuous or discrete actions"
       ],
@@ -302,7 +302,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why does pure greedy action selection (always pick argmax Q) tend to perform poorly during learning?",
       options: [
-        "It never explores, so it can get stuck exploiting a suboptimal action whose true value was underestimated",
+        "It never explores, so it can get stuck on an underestimated action",
         "It requires far more compute than any exploration strategy",
         "It only works when rewards are strictly negative"
       ],
@@ -316,7 +316,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "In ε-greedy exploration, what happens with probability ε?",
       options: [
-        "The agent picks a random action instead of the current best (greedy) action",
+        "The agent picks a random action instead of the greedy one",
         "The agent switches to a completely different reward function",
         "The agent resets all of its Q-value estimates to zero"
       ],
@@ -330,7 +330,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Softmax (Boltzmann) exploration differs from ε-greedy in that it:",
       options: [
-        "Weights action-selection probability by relative Q-value, so better-looking actions are explored more than clearly bad ones",
+        "It weights exploration by Q-value, favoring better-looking actions",
         "Never selects any action other than the single best one",
         "Requires a discrete, finite, and very small action space to function at all"
       ],
@@ -344,7 +344,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "What is the purpose of n-step returns in TD learning?",
       options: [
-        "They interpolate between one-step TD and full Monte Carlo returns, trading off bias and variance",
+        "They interpolate between one-step TD and Monte Carlo returns",
         "They eliminate the need for a discount factor entirely",
         "They only apply when the environment is fully deterministic"
       ],
@@ -358,9 +358,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "TD(λ) and eligibility traces are used to:",
       options: [
-        "Efficiently blend information from many n-step returns using a single decaying trace per state, controlled by λ",
-        "Guarantee the policy is always fully greedy",
-        "Replace the need for a reward function"
+        "They blend many n-step returns via one decaying trace, set by λ",
+        "Guarantee the policy stays fully greedy throughout training",
+        "Remove the need for any reward function at all"
       ],
       correct: 0,
       why: [
@@ -372,9 +372,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why is function approximation (e.g. neural networks) needed in many RL problems?",
       options: [
-        "State (and/or action) spaces can be too large or continuous to represent with a table of values for each state",
-        "It's required to make Q-learning off-policy",
-        "It removes the need for an exploration strategy"
+        "State or action spaces can be too large or continuous for a table",
+        "It's what makes Q-learning off-policy rather than on-policy",
+        "It removes any need for an exploration strategy"
       ],
       correct: 0,
       why: [
@@ -400,7 +400,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "What was a key innovation of DQN (Deep Q-Network) for stabilizing Q-learning with neural networks?",
       options: [
-        "Using a replay buffer of past transitions and a separate, slowly-updated target network",
+        "A replay buffer of past transitions and a separate target network",
         "Removing the discount factor to simplify the Bellman target",
         "Training exclusively on-policy with no exploration"
       ],
@@ -414,9 +414,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why does experience replay help train DQN?",
       options: [
-        "It breaks the strong temporal correlation between consecutive transitions and lets the agent reuse past data efficiently",
-        "It guarantees the policy found is globally optimal",
-        "It removes the need for a reward signal"
+        "It decorrelates consecutive transitions and reuses past data",
+        "It guarantees the policy it finds is globally optimal",
+        "It removes the need for any reward signal at all"
       ],
       correct: 0,
       why: [
@@ -428,7 +428,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why does a separate 'target network' help stabilize DQN training?",
       options: [
-        "It keeps the bootstrapped target r + γ max_a' Q(s',a') fixed for a while, so the network isn't chasing a constantly-moving target",
+        "It keeps the bootstrapped target fixed so the net isn't chasing itself",
         "It doubles the effective learning rate for faster convergence",
         "It removes the max operator from the Q-learning update"
       ],
@@ -442,8 +442,8 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Policy gradient methods differ fundamentally from value-based methods (like Q-learning) because they:",
       options: [
-        "Directly parameterize and optimize the policy via gradient ascent on expected return, rather than deriving a policy from value estimates",
-        "Never require any notion of reward",
+        "They optimize the policy directly by gradient ascent on return",
+        "They never require any notion of reward at all",
         "Can only be applied to environments with a single possible action"
       ],
       correct: 0,
@@ -456,7 +456,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "REINFORCE updates policy parameters using a gradient estimate that involves:",
       options: [
-        "The log-probability of the taken action multiplied by the observed return from that point on",
+        "The log-prob of the taken action, scaled by the return from there on",
         "The second derivative (Hessian) of the value function",
         "A fixed learning-rate schedule and nothing derived from the trajectory"
       ],
@@ -470,8 +470,8 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why do policy gradient methods commonly subtract a baseline (like V(s)) from the return?",
       options: [
-        "To reduce the variance of the gradient estimate without introducing bias",
-        "To make the policy fully deterministic",
+        "To cut gradient-estimate variance without adding bias",
+        "To force the policy to become fully deterministic",
         "To eliminate the need for a discount factor"
       ],
       correct: 0,
@@ -484,7 +484,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "In an actor-critic architecture, what do the 'actor' and 'critic' each do?",
       options: [
-        "The actor selects actions (the policy); the critic estimates a value function to evaluate the actor's choices",
+        "The actor picks actions (policy); the critic estimates value to judge them",
         "The actor stores past transitions; the critic executes actions in the environment",
         "The actor and critic are two identical copies of the same value network"
       ],
@@ -498,7 +498,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "The advantage function A(s,a) is defined as:",
       options: [
-        "Q(s,a) − V(s), how much better an action is than the policy's average action at that state",
+        "Q(s,a) − V(s): how much better a is than the average action",
         "Q(s,a) + V(s), the total value of taking an action",
         "The discount factor multiplied by the reward"
       ],
@@ -512,7 +512,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "What does Generalized Advantage Estimation (GAE) primarily provide?",
       options: [
-        "A tunable parameter λ that blends multiple n-step advantage estimates to trade off bias and variance",
+        "A λ that blends n-step advantage estimates for bias-variance",
         "A method for discretizing continuous action spaces",
         "A guarantee that the policy gradient has zero variance"
       ],
@@ -526,7 +526,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "PPO's clipped surrogate objective is designed to:",
       options: [
-        "Prevent the new policy from moving too far from the old policy in a single update, without the complexity of TRPO's constrained optimization",
+        "Keep the new policy close to the old one, more simply than TRPO",
         "Force the policy to always be fully deterministic",
         "Remove the value function/critic from training entirely"
       ],
@@ -540,7 +540,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "TRPO (Trust Region Policy Optimization) constrains policy updates by:",
       options: [
-        "Limiting the KL divergence between the old and new policy within a trust region",
+        "Bounding the KL divergence between old and new policy",
         "Capping the total number of neurons in the policy network",
         "Disabling exploration after the first training epoch"
       ],
@@ -554,7 +554,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Adding an entropy bonus to a policy gradient objective encourages:",
       options: [
-        "More exploration, by penalizing the policy for becoming overly deterministic too quickly",
+        "More exploration, by penalizing overly deterministic policies",
         "Faster convergence to a purely greedy, deterministic policy",
         "The value function to ignore future rewards"
       ],
@@ -568,7 +568,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "DDPG (Deep Deterministic Policy Gradient) was designed mainly to handle:",
       options: [
-        "Continuous action spaces, where taking an explicit max_a Q(s,a) (as in Q-learning) is intractable",
+        "Continuous action spaces, where an explicit max_a Q(s,a) is intractable",
         "Purely tabular environments with a handful of discrete states",
         "Environments with no reward signal whatsoever"
       ],
@@ -582,7 +582,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why can't standard Q-learning be applied directly to continuous action spaces?",
       options: [
-        "Computing max_a Q(s,a) exactly requires optimizing over infinitely many possible actions",
+        "Computing max_a Q(s,a) means optimizing over infinite actions",
         "Continuous actions always produce zero reward",
         "Q-learning requires the discount factor to be exactly 1"
       ],
@@ -596,7 +596,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Importance sampling is used in off-policy RL to:",
       options: [
-        "Reweight returns/updates collected under a behavior policy so they give an unbiased estimate for a different target policy",
+        "Reweight behavior-policy returns to estimate a target policy",
         "Increase the discount factor automatically over time",
         "Convert a stochastic policy into a deterministic one"
       ],
@@ -610,7 +610,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "The 'credit assignment problem' in RL refers to the challenge of:",
       options: [
-        "Determining which past actions in a long trajectory were actually responsible for a later observed reward",
+        "Determining which past actions caused a later observed reward",
         "Assigning a monetary budget for cloud compute during training",
         "Choosing which team member gets credit for the trained model"
       ],
@@ -624,7 +624,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "What is a risk of naive reward shaping (adding auxiliary rewards to speed up learning)?",
       options: [
-        "It can unintentionally change the optimal policy if the shaping isn't potential-based",
+        "It can change the optimal policy if it isn't potential-based",
         "It always makes training slower with no other side effects",
         "It removes the need for a discount factor"
       ],
@@ -638,7 +638,7 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "The key distinction between model-based and model-free RL is:",
       options: [
-        "Model-based methods learn or use a model of transitions/rewards to plan; model-free methods learn values/policies directly from experience",
+        "Model-based methods plan with a model; model-free learn directly",
         "Model-based methods never use neural networks",
         "Model-free methods require the reward function to be known in advance"
       ],
@@ -652,9 +652,9 @@ window.FLASHCARD_DECKS["reinforcement-learning-advanced"] = {
     {
       q: "Why is Monte Carlo return considered 'unbiased' compared to TD targets?",
       options: [
-        "MC uses the actual sampled return, while TD substitutes a bootstrapped estimate that may itself be inaccurate",
+        "MC uses the actual return; TD uses a bootstrapped estimate",
         "MC always converges faster than TD in every environment",
-        "MC doesn't require any exploration"
+        "MC doesn't require any exploration at all"
       ],
       correct: 0,
       why: [
